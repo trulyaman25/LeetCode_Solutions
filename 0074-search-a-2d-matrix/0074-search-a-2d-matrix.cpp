@@ -24,9 +24,7 @@ public:
 
         int low = 0;
         int high = matrix[0].size() - 1;
-        if(suspectedRow == -1){
-            return false;
-        } else {
+        if(suspectedRow != -1){
             while(low <= high){
                 int midIndex = low + (high - low) / 2;
                 if(matrix[suspectedRow][midIndex] == target){
