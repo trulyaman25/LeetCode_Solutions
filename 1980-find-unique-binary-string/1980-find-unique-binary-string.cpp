@@ -20,7 +20,6 @@ public:
     }
 
     string findDifferentBinaryString(vector<string>& nums) {
-        sort(nums.begin(), nums.end());
         unordered_map<string, int> hashMap;
         for(int i = 0; i < nums.size(); i++){
             hashMap[nums[i]]++;
