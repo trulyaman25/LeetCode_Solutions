@@ -12,9 +12,7 @@ public:
             number /= 2;
         }
 
-        while(binary.length() < length){
-            binary = "0" + binary;
-        }
+        binary = string(length - binary.length(), '0') + binary;
 
         return binary;
     }
