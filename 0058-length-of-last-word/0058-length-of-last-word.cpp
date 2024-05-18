@@ -1,21 +1,15 @@
 class Solution {
 public:
     int lengthOfLastWord(string s) {
-        int count = 0;
-        bool flag = false;
+        int lengthCount = 0;
         for(int i = s.length() - 1; i >= 0; i--){
-            if(s[i] == ' '){
-                if(!flag){
-                    continue;
-                } else {
-                    break;
-                }
-            } else {
-                count++;
-                flag = true;
+            if(s[i] != ' '){
+                lengthCount++;
+            }
+            if(lengthCount > 0 && s[i] == ' '){
+                return lengthCount;
             }
         }
-
-        return count;
+        return lengthCount;
     }
 };
