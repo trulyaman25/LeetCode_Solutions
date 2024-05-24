@@ -12,7 +12,7 @@ public:
         }
 
         int count = 0;
-        while(!stack.empty() && count < students.size()){
+        while(!stack.empty() && count < queue.size()){
             if(queue.front() == stack.top()){
                 queue.pop();
                 stack.pop();
