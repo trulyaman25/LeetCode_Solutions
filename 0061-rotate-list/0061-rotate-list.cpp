@@ -22,29 +22,29 @@ public:
 
     ListNode* rotateRight(ListNode* head, int k){
         int totalLength = findLength(head);
-        if(head == NULL || head->next == NULL || totalLength == 0){
+        if(head == nullptr || head->next == nullptr || k % totalLength == 0){
             return head;
         }
 
         int rotateIndex = k % totalLength;
         int newListLength = totalLength - rotateIndex;
-        
+
         int count = 0;
         ListNode* tempHead = head;
-        while(tempHead->next){
-        tempHead = tempHead->next;
-        }
-        tempHead->next = head;
-
-        count = 0;
-        tempHead = head;
-        while(count != newListLength - 1){
-            tempHead = tempHead->next;
+        ListNode* newHead = head;
+        while(count <= totalLength){
             count++;
+            if(count == newListLength){
+                newHead = tempHead->next;
+                tempHead->next = nullptr;
+                tempHead = newHead;
+            } else if(count == totalLength) {
+                tempHead->next = head;
+            } else {
+                tempHead = tempHead->next;
+            }
         }
-        head = tempHead->next;
-        tempHead->next = nullptr;
 
-        return head;
+        return newHead;
     }
 };
