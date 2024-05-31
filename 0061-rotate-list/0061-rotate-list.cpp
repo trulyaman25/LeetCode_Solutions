@@ -27,14 +27,13 @@ public:
         }
 
         int rotateIndex = k % totalLength;
-        int newListLength = totalLength - rotateIndex;
 
         int count = 0;
         ListNode* tempHead = head;
         ListNode* newHead = head;
         while(count <= totalLength){
             count++;
-            if(count == newListLength){
+            if(count == totalLength - rotateIndex){
                 newHead = tempHead->next;
                 tempHead->next = nullptr;
                 tempHead = newHead;
