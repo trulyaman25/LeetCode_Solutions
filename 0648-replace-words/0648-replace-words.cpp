@@ -19,16 +19,14 @@ public:
             }
         }
 
+        string result = "";
         for(int i = 0; i < words.size(); i++){
             for(int j = 0; j < words[i].length(); j++){
                 if(hashMap[words[i].substr(0, j)] == 1){
                     words[i] = words[i].substr(0, j);
                 }
             }
-        }
-
-        string result = "";
-        for(int i = 0; i < words.size(); i++){
+            
             if(i == words.size() - 1){
                 result += words[i];
             } else {
