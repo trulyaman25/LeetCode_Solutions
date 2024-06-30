@@ -1,41 +1,31 @@
 class Solution {
 public:
-    void findCombinations(int index, int targetSum, int currentSum, vector<int> &assetVector, vector<int> &dataVector, set<vector<int>> &resultantSet){
-        if(currentSum > targetSum){
+    void findCombinations(int index, int targetSum, vector<int> &assetVector, vector<int> &dataVector, vector<vector<int>> &resultantVector){
+        if(targetSum == 0){
+            resultantVector.push_back(dataVector);
             return;
         }
 
-        if(index == assetVector.size()){
-            if(currentSum == targetSum){
-                resultantSet.insert(dataVector);
+        for(int i = index; i < assetVector.size(); i++){
+            if(i > index && assetVector[i] == assetVector[i - 1]){
+                continue;
             }
-            return;
-        } 
 
-        dataVector.push_back(assetVector[index]);
-        currentSum += assetVector[index];
-        findCombinations(index + 1, targetSum, currentSum, assetVector, dataVector, resultantSet);
+            if(targetSum < assetVector[i]){
+                break;
+            }
 
-        currentSum -= dataVector.back();
-        dataVector.pop_back();
-
-        while (index + 1 < assetVector.size() && assetVector[index] == assetVector[index + 1]) {
-            index++;
+            dataVector.push_back(assetVector[i]);
+            findCombinations(i + 1, targetSum - assetVector[i], assetVector, dataVector, resultantVector);
+            dataVector.pop_back();
         }
-        findCombinations(index + 1, targetSum, currentSum, assetVector, dataVector, resultantSet);
     }
 
     vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
         vector<int> dataVector;
-        set<vector<int>> resultantSet;
         vector<vector<int>> resultantVector;
-
         sort(candidates.begin(), candidates.end());
-        findCombinations(0, target, 0, candidates, dataVector, resultantSet);
-
-        for(auto it : resultantSet){
-            resultantVector.push_back(it);
-        }
+        findCombinations(0, target, candidates, dataVector, resultantVector);
 
         return resultantVector;
     }
