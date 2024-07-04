@@ -1,42 +1,24 @@
-/**
- * Definition for singly-linked list.
- * struct ListNode {
- *     int val;
- *     ListNode *next;
- *     ListNode() : val(0), next(nullptr) {}
- *     ListNode(int x) : val(x), next(nullptr) {}
- *     ListNode(int x, ListNode *next) : val(x), next(next) {}
- * };
- */
 class Solution {
 public:
     ListNode* mergeNodes(ListNode* head) {
         ListNode* tempHead = head->next;
+        int sum = 0;
 
-        long long sum = 0;
-        vector<long long> resultantVector;
+        ListNode* newHead = new ListNode();
+        ListNode* mover = newHead;
         while(tempHead){
+            sum += tempHead->val;
+
             if(tempHead->val == 0){
-                resultantVector.push_back(sum);
+                ListNode* newNode = new ListNode(sum);
+                mover->next = newNode;
+                mover = mover->next;
                 sum = 0;
-            } else {
-                sum += tempHead->val;
             }
+
             tempHead = tempHead->next;
         }
 
-        for(auto it : resultantVector){
-            cout << it << " ";
-        }
-
-        ListNode* newHead = new ListNode(resultantVector[0]);
-        ListNode* mover = newHead;
-        for(int i = 1; i < resultantVector.size(); i++){
-            ListNode* newNode = new ListNode(resultantVector[i]);
-            mover->next = newNode;
-            mover = mover->next;
-        }
-
-        return newHead;
+        return newHead->next;
     }
 };
