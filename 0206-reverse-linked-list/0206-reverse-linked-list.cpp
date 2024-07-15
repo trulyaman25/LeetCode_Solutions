@@ -8,26 +8,17 @@
  *     ListNode(int x, ListNode *next) : val(x), next(next) {}
  * };
  */
- 
- //Brute Force Solution
 class Solution {
 public:
     ListNode* reverseList(ListNode* head) {
-        stack<int> stack;
-
-        ListNode* tempHead = head;
-        while(tempHead){
-            stack.push(tempHead->val);
-            tempHead = tempHead->next;
+        ListNode* previousNode = NULL;
+        ListNode* currentNode = head;
+        while(currentNode){
+            ListNode* nextNode = currentNode->next;
+            currentNode->next = previousNode;
+            previousNode = currentNode;
+            currentNode = nextNode;
         }
-
-        tempHead = head;
-        while(tempHead){
-            tempHead->val = stack.top();
-            stack.pop();
-            tempHead = tempHead->next;
-        }
-
-        return head;
+        return previousNode;
     }
 };
