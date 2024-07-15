@@ -20,9 +20,14 @@ public:
     }
     
     int getMin() {
-        vector<long long int> dataVector = stack;
-        sort(dataVector.begin(), dataVector.end());
-        return dataVector[0];
+        int min = INT_MAX;
+        for(int i = 0; i < stack.size(); i++){
+            if(stack[i] < min){
+                min = stack[i];
+            }
+        }
+
+        return min;
     }
 };
 
