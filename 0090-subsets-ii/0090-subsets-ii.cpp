@@ -1,23 +1,24 @@
 class Solution {
 public:
-    vector<vector<int>> subsetsWithDup(vector<int>& nums) {
-        set<vector<int>> set;
-        int totalSubsets = pow(2, nums.size());
-        for(int i = 0; i < totalSubsets; i++){
-            vector<int> rowVector;
-            for(int j = 0; j < nums.size(); j++){
-                if(i & (1 << j)){
-                    rowVector.push_back(nums[j]);
-                }
-            }
-            sort(rowVector.begin(), rowVector.end());
-            set.emplace(rowVector);
-        }
+    void findSubSets(int index, vector<int>& assetVector, vector<int>& dataVector, vector<vector<int>>& resultantVector){
+        resultantVector.push_back(dataVector);
 
-        vector<vector<int>> resultantVector;
-        for(auto it : set){
-            resultantVector.push_back(it);
+        for(int i = index; i < assetVector.size(); i++){
+            if(i != index && assetVector[i] == assetVector[i - 1]){
+                continue;
+            }
+
+            dataVector.push_back(assetVector[i]);
+            findSubSets(i + 1, assetVector, dataVector, resultantVector);
+            dataVector.pop_back();
         }
+    }
+
+    vector<vector<int>> subsetsWithDup(vector<int>& nums) {
+        vector<int> dataVector;
+        vector<vector<int>> resultantVector;
+        sort(nums.begin(), nums.end());
+        findSubSets(0, nums, dataVector, resultantVector);
 
         return resultantVector;
     }
