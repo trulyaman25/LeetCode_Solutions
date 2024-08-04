@@ -15,7 +15,7 @@ public:
         int resultantSum = 0;
         int mod = 1e9 + 7;
         for(int i = left - 1; i < right; i++){
-            resultantSum = (resultantSum + vectorSum[i]) % mod;
+            resultantSum += vectorSum[i] % mod;
         }
 
         return resultantSum;
