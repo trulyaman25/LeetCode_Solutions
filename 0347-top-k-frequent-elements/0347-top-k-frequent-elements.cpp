@@ -8,7 +8,7 @@ public:
 
         priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> minHeap;
         for(auto it : hashMap){
-            minHeap.push(make_pair(it.first, it.second));
+            minHeap.push(make_pair(it.second, it.first));
             if(minHeap.size() > k){
                 minHeap.pop();
             }
