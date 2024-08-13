@@ -1,8 +1,8 @@
 class Solution {
 public:
-    void findCombinations(int index, int targetSum, vector<int> &assetVector, vector<int> &dataVector, vector<vector<int>> &resultantVector){
-        if(targetSum == 0){
-            resultantVector.push_back(dataVector);
+    void backtrack(int index, int target, vector<int>& assetVector, vector<int>& printingVector, vector<vector<int>>& resultantVector){
+        if(target == 0){
+            resultantVector.push_back(printingVector);
             return;
         }
 
@@ -11,21 +11,23 @@ public:
                 continue;
             }
 
-            if(targetSum < assetVector[i]){
+            if(target < assetVector[i]){
                 break;
             }
 
-            dataVector.push_back(assetVector[i]);
-            findCombinations(i + 1, targetSum - assetVector[i], assetVector, dataVector, resultantVector);
-            dataVector.pop_back();
+            printingVector.push_back(assetVector[i]);
+            backtrack(i + 1, target - assetVector[i], assetVector, printingVector, resultantVector);
+            printingVector.pop_back();
         }
     }
 
     vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
         vector<int> dataVector;
         vector<vector<int>> resultantVector;
+
         sort(candidates.begin(), candidates.end());
-        findCombinations(0, target, candidates, dataVector, resultantVector);
+
+        backtrack(0, target, candidates, dataVector, resultantVector);
 
         return resultantVector;
     }
