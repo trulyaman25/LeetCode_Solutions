@@ -6,28 +6,19 @@ public:
         for(int i = 0; i < bills.size(); i++){
             if(bills[i] == 5){
                 fiveCount++;
-            } else if(bills[i] == 10){
+            } else if(bills[i] == 10 && fiveCount > 0){
                 tenCount++;
                 fiveCount--;
-                if(fiveCount < 0){
-                    return false;
-                }
             } else {
                 if(tenCount > 0){
                     tenCount--;
-                    if(fiveCount > 0){
+                    if(fiveCount > 0 && fiveCount > 0){
                         fiveCount--;
-                        if(fiveCount < 0){
-                            return false;
-                        }
                     } else {
                         return false;
                     }
-                } else if(fiveCount >= 3){
+                } else if(fiveCount >= 3 && fiveCount > 0){
                     fiveCount -= 3;
-                        if(fiveCount < 0){
-                            return false;
-                        }
                 } else {
                     return false;
                 }
