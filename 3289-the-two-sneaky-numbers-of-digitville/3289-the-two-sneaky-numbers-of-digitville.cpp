@@ -8,6 +8,9 @@ public:
             if(hashMap[nums[i]] > 1){
                 resultantVector.push_back(nums[i]);
             }
+            if(resultantVector.size() == 2){
+                return resultantVector;
+            }
         }
 
         return resultantVector;
