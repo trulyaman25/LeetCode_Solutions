@@ -1,34 +1,45 @@
 class Solution {
 public:
     vector<int> searchRange(vector<int>& nums, int target) {
-        int start = -1;
-        int end = -1;
-        int targetCount = 0;
+        vector<int> resultantVector = {-1, -1};
+        int pointerOne = 0;
+        int pointerTwo = nums.size() - 1;
 
-        for(int i = 0; i < nums.size(); i++){
-            if(nums[i] == target){
-                targetCount++;
+        while(pointerOne <= pointerTwo){
+            int mid = pointerOne + (pointerTwo - pointerOne) / 2;
+            int value = nums[mid];
+
+            if(value == target){
+                resultantVector[0] = mid;
+                pointerTwo = mid - 1;
+            } else if (value > target) {
+                pointerTwo = mid - 1;
+            } else {
+                pointerOne = mid + 1;
             }
         }
 
-        bool startFound = false;
-        for(int i = 0; i < nums.size(); i++){
-            if(!startFound){
-                if(nums[i] == target){
-                    start = i;
-                    startFound = true;
-                }
-            }
+        pointerOne = 0;
+        pointerTwo = nums.size() - 1;
+        while(pointerOne <= pointerTwo){
+            int mid = pointerOne + (pointerTwo - pointerOne) / 2;
+            int value = nums[mid];
 
-            if(nums[i] == target && i != start || nums[i] == target && targetCount == 1){
-                end = i;
+            if(value == target){
+                resultantVector[1] = mid;
+                pointerOne = mid + 1;
+            } else if (value > target) {
+                pointerTwo = mid - 1;
+            } else {
+                pointerOne = mid + 1;
             }
         }
 
-        vector<int> result;
-        result.push_back(start);
-        result.push_back(end);
 
-        return result;
+        if(resultantVector.size() == 0){
+            return {-1, -1};
+        }
+
+        return resultantVector;
     }
 };
