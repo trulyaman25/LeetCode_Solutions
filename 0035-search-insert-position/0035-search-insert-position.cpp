@@ -1,23 +1,23 @@
 class Solution {
 public:
     int searchInsert(vector<int>& nums, int target) {
-        int leftPointer = 0;
-        int rightPointer = nums.size() - 1;
+        int pointerOne = 0;
+        int pointerTwo = nums.size() - 1;
 
-        int index = 0;
-        while(leftPointer <= rightPointer){
-            int mid = (leftPointer + rightPointer) / 2;
-            if(target > nums[mid]){
-                leftPointer = mid + 1;
-                index = leftPointer;
-            } else if(target < nums[mid]){
-                rightPointer = mid - 1;
-                index = rightPointer;
-            } else {
+        int mid = pointerOne + (pointerTwo - pointerOne) / 2;
+        while(pointerOne <= pointerTwo){
+            mid = pointerOne + (pointerTwo - pointerOne) / 2;
+            int value = nums[mid];
+
+            if(value == target){
                 return mid;
+            } else if (target > nums[mid]) {
+                pointerOne = mid + 1;
+            } else {
+                pointerTwo = mid - 1;
             }
         }
-
-        return leftPointer;
+        
+        return pointerOne;
     }
 };
