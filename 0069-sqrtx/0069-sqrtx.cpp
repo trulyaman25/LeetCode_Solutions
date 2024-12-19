@@ -1,21 +1,21 @@
 class Solution {
 public:
     int mySqrt(int x) {
-        int leftPointer = 0;
-        int rightPointer = x;
+        int pointerOne = 0;
+        int pointerTwo = x;
 
-        while(leftPointer <= rightPointer){
-            long long midPointer = (leftPointer + rightPointer) / 2;
-
-            if(midPointer * midPointer == x){
-                return midPointer;
-            } else if(midPointer * midPointer > x){
-                rightPointer = midPointer - 1;
+        while(pointerOne <= pointerTwo){
+            long long mid = pointerOne + (pointerTwo - pointerOne) / 2;
+            
+            if(mid * mid == x){
+                return mid;
+            } else if (mid * mid < x) {
+                pointerOne = mid + 1;
             } else {
-                leftPointer = midPointer + 1;
+                pointerTwo = mid - 1;
             }
         }
 
-        return rightPointer;
+        return pointerTwo;
     }
 };
