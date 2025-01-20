@@ -7,27 +7,27 @@ public:
         vector<int> resultantVector;
         deque<int> deque;
         while (pointerTwo < k) {
-            while (!deque.empty() && nums[deque.back()] <= nums[pointerTwo]) {
+            while (!deque.empty() && nums[pointerTwo] >= deque.back()) {
                 deque.pop_back();
             }
-            deque.push_back(pointerTwo);
+            deque.push_back(nums[pointerTwo]);
             pointerTwo++;
         }
 
-        resultantVector.push_back(nums[deque.front()]);
+        resultantVector.push_back(deque.front());
 
         while (pointerTwo < nums.size()) {
-            while (!deque.empty() && deque.front() <= pointerOne) {
+            if (deque.front() == nums[pointerOne]) {
                 deque.pop_front();
             }
 
-            while (!deque.empty() && nums[deque.back()] <= nums[pointerTwo]) {
+            while (!deque.empty() && nums[pointerTwo] >= deque.back()) {
                 deque.pop_back();
             }
 
-            deque.push_back(pointerTwo);
+            deque.push_back(nums[pointerTwo]);
 
-            resultantVector.push_back(nums[deque.front()]);
+            resultantVector.push_back(deque.front());
 
             pointerOne++;
             pointerTwo++;
