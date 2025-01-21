@@ -5,17 +5,21 @@ public:
         int pointerTwo = 0;
 
         int maxLength = 0;
-        unordered_map<char, int> hashMap;
+
+        unordered_map<char, int> charFrequency;
         while(pointerTwo < s.length()){
-            hashMap[s[pointerTwo]]++;
-            while(hashMap[s[pointerTwo]] > 1){
-                if(hashMap[s[pointerOne]] > 0){
-                    hashMap[s[pointerOne]]--;
+            charFrequency[s[pointerTwo]]++;
+
+            while(charFrequency[s[pointerTwo]] > 1){
+                charFrequency[s[pointerOne]]--;
+                if(charFrequency[s[pointerOne]] == 0){
+                    charFrequency.erase(s[pointerOne]);
                 }
+
                 pointerOne++;
             }
 
-            maxLength = max(maxLength, pointerTwo - pointerOne + 1);
+            maxLength = max(pointerTwo - pointerOne + 1, maxLength);
             pointerTwo++;
         }
 
