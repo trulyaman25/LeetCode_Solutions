@@ -1,26 +1,26 @@
 class Solution {
 public:
-    int longestOnes(vector<int>& nums, int life) {
+    int longestOnes(vector<int>& nums, int threshold) {
         int pointerOne = 0;
         int pointerTwo = 0;
 
-        int maxLength = 0;
+        int longestSubString = 0;
         while(pointerTwo < nums.size()){
             if(nums[pointerTwo] == 0){
-                life--;
+                threshold--;
             }
 
-            while(life < 0){
+            while(threshold < 0){
                 if(nums[pointerOne] == 0){
-                    life++;
+                    threshold++;
                 }
                 pointerOne++;
             }
 
-            maxLength = max(pointerTwo - pointerOne + 1, maxLength);
+            longestSubString = max(longestSubString, pointerTwo - pointerOne + 1);
             pointerTwo++;
         }
 
-        return maxLength;
+        return longestSubString;
     }
 };
