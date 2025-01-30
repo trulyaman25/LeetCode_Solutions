@@ -1,28 +1,27 @@
 class Solution {
 public:
-    int numSubarraysWithSum(vector<int>& nums, int goal) {
-        int countOne = calculateSubArray(nums, goal);
-        int countTwo = calculateSubArray(nums, goal - 1);
-
-        return countOne - countTwo;
-    }
-
-    int calculateSubArray(vector<int>& nums, int goal) {
-        int count = 0;
-        int sum = 0;
-
+    int countSubArray(vector<int>& nums, int goal){
         int pointerOne = 0;
-        for (int pointerTwo = 0; pointerTwo < nums.size(); pointerTwo++) {
+        int pointerTwo = 0;
+
+        int sum = 0;
+        int subArrayCount = 0;
+        while(pointerTwo < nums.size()){
             sum += nums[pointerTwo];
 
-            while (sum > goal && pointerOne <= pointerTwo) {
+            while(sum > goal && pointerOne <= pointerTwo){
                 sum -= nums[pointerOne];
                 pointerOne++;
             }
 
-            count += (pointerTwo - pointerOne + 1);
+            subArrayCount += pointerTwo - pointerOne + 1;
+            pointerTwo++;
         }
 
-        return count;
+        return subArrayCount;
+    }
+
+    int numSubarraysWithSum(vector<int>& nums, int goal) {
+        return countSubArray(nums, goal) - countSubArray(nums, goal - 1);
     }
 };
