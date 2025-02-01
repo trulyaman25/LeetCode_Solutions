@@ -9,11 +9,15 @@ public:
         }
         gaps.push_back(eventTime - endTime.back());
 
+        for(auto it : gaps){
+            cout << it << " " ;
+        }
+
         int maxSum = 0;
         int currentSum = 0;
         int pointerOne = 0;
         int pointerTwo = 0;
-        while(pointerTwo < k + 1){
+        while(pointerTwo < k){
             currentSum += gaps[pointerTwo];
             pointerTwo++;
         }
