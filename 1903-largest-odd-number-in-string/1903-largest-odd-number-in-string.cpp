@@ -3,14 +3,10 @@ public:
     string largestOddNumber(string nums) {
         string longestString = "";
         string currentString = "";
-        for(int i = 0; i < nums.size(); i++){
-            currentString += nums[i];
-            if( currentString.back() == '1' || 
-                currentString.back() == '3' || 
-                currentString.back() == '5' || 
-                currentString.back() == '7' || 
-                currentString.back() == '9' ) {
-                    longestString = currentString;
+        for(int i = nums.size() - 1; i >= 0; i--){
+            if( nums[i] == '1' || nums[i] == '3' || nums[i] == '5' || nums[i] == '7' || nums[i] == '9' ) {
+                    longestString = nums.substr(0, i + 1);
+                    break;
             }
         }
 
