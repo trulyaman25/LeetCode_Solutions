@@ -1,18 +1,19 @@
 class Solution {
 public:
     string largestOddNumber(string nums) {
-        string largestOdd = "";
+        string longestString = "";
         string currentString = "";
         for(int i = 0; i < nums.size(); i++){
             currentString += nums[i];
-            int intValue = stoi(currentString);
-            if(intValue % 2 != 0){
-                if(currentString.length() >= largestOdd.length()){
-                    largestOdd = currentString;
-                }   
+            if( currentString.back() == '1' || 
+                currentString.back() == '3' || 
+                currentString.back() == '5' || 
+                currentString.back() == '7' || 
+                currentString.back() == '9' ) {
+                    longestString = currentString;
             }
         }
 
-        return largestOdd;
+        return longestString;
     }
 };
