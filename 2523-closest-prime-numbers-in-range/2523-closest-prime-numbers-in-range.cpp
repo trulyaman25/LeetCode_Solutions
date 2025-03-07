@@ -18,6 +18,10 @@ public:
             }
         }
 
+        if (primes.size() < 2){
+            return {-1, -1};
+        }
+
         vector<int> result = {-1, -1};
 
         int minDiff = INT_MAX;
