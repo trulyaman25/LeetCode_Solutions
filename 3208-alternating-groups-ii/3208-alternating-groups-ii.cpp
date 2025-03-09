@@ -7,6 +7,7 @@ public:
         }
 
         int groupCount = 0;
+        
         int pointerOne = 0;
         int pointerTwo = 1;
         while(pointerTwo < nums.size()){
@@ -18,7 +19,7 @@ public:
                 pointerTwo++;
             } else {
                 groupCount++;
-                
+
                 pointerOne++;
                 pointerTwo++;
             }
