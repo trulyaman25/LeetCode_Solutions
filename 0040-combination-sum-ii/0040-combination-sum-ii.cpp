@@ -1,8 +1,8 @@
 class Solution {
 public:
-    void backtrack(int index, int target, vector<int>& assetVector, vector<int>& printingVector, vector<vector<int>>& resultantVector){
-        if(target == 0){
-            resultantVector.push_back(printingVector);
+    void combinationalSumTwo(vector<int>& assetVector, int targetSum, vector<vector<int>>& resultantVector, vector<int> tempVector, int index){
+        if(targetSum == 0){
+            resultantVector.push_back(tempVector);
             return;
         }
 
@@ -11,23 +11,22 @@ public:
                 continue;
             }
 
-            if(target < assetVector[i]){
+            if(targetSum < assetVector[i]){
                 break;
             }
 
-            printingVector.push_back(assetVector[i]);
-            backtrack(i + 1, target - assetVector[i], assetVector, printingVector, resultantVector);
-            printingVector.pop_back();
+            tempVector.push_back(assetVector[i]);
+            combinationalSumTwo(assetVector, targetSum - assetVector[i], resultantVector, tempVector, i + 1);
+            tempVector.pop_back();
         }
     }
 
     vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
-        vector<int> dataVector;
-        vector<vector<int>> resultantVector;
-
         sort(candidates.begin(), candidates.end());
 
-        backtrack(0, target, candidates, dataVector, resultantVector);
+        vector<int> tempVector;
+        vector<vector<int>> resultantVector;
+        combinationalSumTwo(candidates, target, resultantVector, tempVector, 0);
 
         return resultantVector;
     }
