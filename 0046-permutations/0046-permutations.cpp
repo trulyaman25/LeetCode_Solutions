@@ -1,27 +1,26 @@
 class Solution {
 public:
-    void findPermutations(int index, vector<int>& assetVector, vector<int>& dataVector, vector<bool>& check, vector<vector<int>>& resultantVector){
-        if(index == assetVector.size()){
-            resultantVector.push_back(dataVector);
+    void findPermutations(vector<int>& assetVector, vector<vector<int>>& resultantVector, vector<int> tempVector, vector<bool>& takenStatus, int index){
+        if(tempVector.size() == assetVector.size()){
+            resultantVector.push_back(tempVector);
             return;
         }
-
         for(int i = 0; i < assetVector.size(); i++){
-            if(!check[i]){
-                dataVector.push_back(assetVector[i]);
-                check[i] = true;
-                findPermutations(index + 1, assetVector, dataVector, check, resultantVector);
-                dataVector.pop_back();
-                check[i] = false;
+            if(!takenStatus[i]){
+                tempVector.push_back(assetVector[i]);
+                takenStatus[i] = !takenStatus[i];
+                findPermutations(assetVector, resultantVector, tempVector, takenStatus, index + 1);
+                takenStatus[i] = !takenStatus[i];
+                tempVector.pop_back();
             }
         }
     }
 
     vector<vector<int>> permute(vector<int>& nums) {
-        vector<int> dataVector;
+        vector<int> tempVector;
         vector<vector<int>> resultantVector;
-        vector<bool> check(nums.size(), false);
-        findPermutations(0, nums, dataVector, check, resultantVector);
+        vector<bool> takenStatus(nums.size(), false);
+        findPermutations(nums, resultantVector, tempVector, takenStatus, 0);
 
         return resultantVector;
     }
