@@ -27,9 +27,9 @@ public:
         for(int i = 0; i < 3; i++){
             for(int j = 0; j < 3; j++){
                 int newRow = startRow + i;
-                int newCol = startCol + j;
-                if(newRow != row || newCol != column){
-                    if(board[newRow][newCol] == indexValue){
+                int newColumn = startCol + j;
+                if(newRow != row && newColumn != column){
+                    if(board[newRow][newColumn] == indexValue){
                         return false;
                     }
                 }
