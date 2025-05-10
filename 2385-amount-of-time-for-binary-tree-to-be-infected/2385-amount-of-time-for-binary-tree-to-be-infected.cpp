@@ -19,24 +19,24 @@ public:
         int targetValue
     ){
 
-    if(root == NULL){
-        return;
-    }
+        if(root == NULL){
+            return;
+        }
 
-    if(root->val == targetValue){
-        targetNode = root;
-    }
+        if(root->val == targetValue){
+            targetNode = root;
+        }
 
-    if(root->left){
-        parentMap[root->left] = root;
-        fillParentMap(root->left, parentMap, targetNode, targetValue);
-    }
+        if(root->left){
+            parentMap[root->left] = root;
+            fillParentMap(root->left, parentMap, targetNode, targetValue);
+        }
 
-    if(root->right){
-        parentMap[root->right] = root;
-        fillParentMap(root->right, parentMap, targetNode, targetValue);
+        if(root->right){
+            parentMap[root->right] = root;
+            fillParentMap(root->right, parentMap, targetNode, targetValue);
+        }
     }
-}
 
 
     void traverse(
