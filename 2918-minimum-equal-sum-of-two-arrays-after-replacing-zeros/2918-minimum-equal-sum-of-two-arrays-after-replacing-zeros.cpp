@@ -15,55 +15,21 @@ public:
             if(nums2[i] == 0) zeroCountTwo++;
         }
 
-        if(zeroCountTwo == 0 && sumTwo < sumOne){
-            return -1;
-        }
-        if(zeroCountOne == 0 && sumTwo > sumOne){
-            return -1;
-        }
-        if(zeroCountOne == 0 && zeroCountTwo == 0 && sumOne != sumTwo){
-            return -1;
-        }
-        if(zeroCountOne == 0 && zeroCountTwo != 0 && sumOne == sumTwo){
-            return -1;
-        }    
-        if(sumOne == sumTwo && zeroCountOne == 0 && zeroCountTwo != 0){
-            return -1;
-        }    
-        if(sumOne == sumTwo && zeroCountOne != 0 && zeroCountTwo == 0){
-            return -1;
-        }    
+        long long minSumOne = sumOne + zeroCountOne;
+        long long minSumTwo = sumTwo + zeroCountTwo;
 
-        if(sumTwo > sumOne){
-            sumTwo += zeroCountTwo;
-            zeroCountTwo = 0;
-
-            sumOne += zeroCountOne;
-            zeroCountOne = 0;
-            while(sumOne < sumTwo){
-                sumOne++;
-            }
-
-            if(sumOne == sumTwo){
-                return sumOne;
-            } else {
-                return -1;
-            }
+        if(zeroCountOne > 0 && zeroCountTwo > 0){
+            return max(minSumOne, minSumTwo);
         }
 
-        sumOne += zeroCountOne;
-        zeroCountOne = 0;
-
-        sumTwo += zeroCountTwo;
-        zeroCountTwo = 0;
-        while(sumTwo < sumOne){
-            sumTwo++;
-        }
-
-        if(sumOne == sumTwo){
-            return sumOne;
-        } else {
+        if(zeroCountOne == 0 && minSumOne < minSumTwo){
             return -1;
         }
+
+        if(zeroCountTwo == 0 && minSumTwo < minSumOne){
+            return -1;
+        }
+
+        return max(minSumOne, minSumTwo);
     }
 };
