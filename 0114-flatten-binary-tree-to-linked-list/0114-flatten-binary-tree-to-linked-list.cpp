@@ -9,20 +9,32 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
+
 class Solution {
 public:
-    TreeNode* previousNode = NULL;
     void flatten(TreeNode* root) {
-        if(root == NULL){
-            return;
-        }
+        if (!root) return;
 
-        flatten(root->right);
-        flatten(root->left);
+        stack<TreeNode*> assetStack;
+        assetStack.push(root);
 
-        root->right = previousNode;
-        root->left = NULL;
+        while(!assetStack.empty()){
+            TreeNode* currentNode = assetStack.top();
+            assetStack.pop();
 
-        previousNode = root;      
+            if(currentNode->right) {
+                assetStack.push(currentNode->right);
+            }
+
+            if(currentNode->left) {
+                assetStack.push(currentNode->left);
+            }
+            
+            if(!assetStack.empty()){
+                currentNode->right = assetStack.top();
+            }
+
+            currentNode->left = NULL;
+        }       
     }
 };
