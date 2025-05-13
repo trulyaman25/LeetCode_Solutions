@@ -11,27 +11,28 @@
  */
 class Solution {
 public:
-    int traverse(TreeNode* root, int& position){
-        if(root == NULL){
-            return -1;
+    void traverse(TreeNode* root, int& result, int& position, bool& found){
+        if(root == NULL || found){
+            return;
         }
 
-        int left = traverse(root->left, position);
+        traverse(root->left, result, position, found);
+
         position--;
         if(position == 0){
-            return root->val;
-        }
-        int right = traverse(root->right, position);
-
-        if(left == -1){
-            return right;
+            result = root->val;
+            found = true;
+            return;
         }
 
-        return left;
+        traverse(root->right, result, position, found);
     }
 
     int kthSmallest(TreeNode* root, int k) {
-        int position = k;
-        return traverse(root, position);
+        int result = -1;
+        bool found = false;
+        traverse(root, result, k, found);
+
+        return result;
     }
 };
