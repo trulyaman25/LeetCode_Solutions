@@ -12,48 +12,53 @@
 class Solution {
 public:
     TreeNode* getLastNode(TreeNode* root){
-        if(root->right == NULL){
-            return root;
+        while(root->right){
+            root = root->right;
         }
 
-        return getLastNode(root->right);
+        return root;
     }
 
     TreeNode* getNode(TreeNode* targetNode){
-        if(targetNode == NULL){
-            return targetNode;
+        if(targetNode->left == NULL){
+            return targetNode->right;
         } else if (targetNode->right == NULL){
             return targetNode->left;
         }
 
         TreeNode* rightNode = targetNode->right;
-        TreeNode* lastRightNode = getLastNode(targetNode->left);
+        TreeNode* leftNode = targetNode->left;
+        TreeNode* lastRightNode = getLastNode(leftNode);
         lastRightNode->right = rightNode;
 
-        return targetNode->left;
+        return leftNode;
     }
 
-    TreeNode* deleteNode(TreeNode* root, int key) {
+    TreeNode* deleteNode(TreeNode* root, int targetValue) {
         if(root == NULL){
             return root;
         }
 
         TreeNode* head = root;
 
-        if(root->val == key){
+        int currentValue = root->val;
+
+        if(currentValue == targetValue){
             return getNode(root);
         }
 
         while(root){
-            if(root->val > key){
-                if(root->left != NULL && root->left->val == key){
+            currentValue = root->val;
+
+            if(currentValue > targetValue){
+                if(root->left && root->left->val == targetValue) {
                     root->left = getNode(root->left);
                     break;
                 } else {
                     root = root->left;
                 }
             } else {
-                if(root->right != NULL && root->right->val == key){
+                if(root->right && root->right->val == targetValue) {
                     root->right = getNode(root->right);
                     break;
                 } else {
