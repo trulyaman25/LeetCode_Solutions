@@ -26,10 +26,6 @@ public:
     }
 
     TreeNode* bstFromPreorder(vector<int>& preorder) {
-        if(preorder.size() == 0){
-            return NULL;
-        }
-
         int index = 0;
         int lowerLimit = INT_MIN;
         int upperLimit = INT_MAX;
