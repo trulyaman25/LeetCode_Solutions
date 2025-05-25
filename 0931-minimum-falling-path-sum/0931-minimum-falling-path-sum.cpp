@@ -2,33 +2,32 @@ class Solution {
 public:
     int minFallingPathSum(vector<vector<int>>& matrix) {
         int side = matrix.size();
-        vector<vector<int>> dp(side, vector<int>(side, INT_MAX));
-
-        for(int i = 0; i < side; i++){
-            dp[side - 1][i] = matrix[side - 1][i];
-        }
+        vector<int> previousDP(matrix.back());
 
         for(int row = side - 2; row >= 0; row--){
+            vector<int> currentDP(side, INT_MAX);
             for(int column = 0; column < side; column++){
-                int down = dp[row + 1][column];
-
                 int left = INT_MAX;
                 if(column - 1 >= 0){
-                    left = dp[row + 1][column - 1];
+                    left = previousDP[column - 1];
                 }
 
                 int right = INT_MAX;
                 if(column + 1 < side){
-                    right = dp[row + 1][column + 1];
+                    right = previousDP[column + 1];
                 }
 
-                dp[row][column] = matrix[row][column] + min({left, down, right});
-            }
-        }
+                int down = previousDP[column];
 
+                currentDP[column] = matrix[row][column] + min({left, down, right});
+            }
+
+            previousDP = currentDP;
+        }
+        
         int minSum = INT_MAX;
-        for(int i = 0; i < side; i++){
-            minSum = min(dp[0][i], minSum);
+        for(auto it : previousDP){
+            minSum = min(it, minSum);
         }
 
         return minSum;
