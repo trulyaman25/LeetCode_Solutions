@@ -1,27 +1,24 @@
 class Solution {
 public:
-    bool bfs(vector<vector<int>>& adjacencyList, vector<pair<int, int>>& visited, int start){
-        visited[start].first = 1;
-        visited[start].second = true;
+    bool dfs(vector<vector<int>>& adjacencyList, vector<int>& visited, int start, int previousColor){
+        int currentColor = 0;
 
-        queue<pair<int, int>> assetQueue;
-        assetQueue.push({start, true});
+        if(previousColor == 0 || previousColor == 2){
+            currentColor = 1;
+        } else {
+            currentColor = 2;
+        }
 
-        while(!assetQueue.empty()){
-            int currentNode = assetQueue.front().first;
-            int currentColor = assetQueue.front().second;
+        visited[start] = currentColor;
+        for(int i = 0; i < adjacencyList[start].size(); i++){
+            int neighbor = adjacencyList[start][i];
 
-            assetQueue.pop();
-            for(int i = 0; i < adjacencyList[currentNode].size(); i++){
-                int neighborNode = adjacencyList[currentNode][i];
-                
-                if(visited[neighborNode].first == -1){
-                    assetQueue.push({neighborNode, !currentColor});
-                    visited[neighborNode].first = 1;
-                    visited[neighborNode].second = !currentColor;
-                } else if(visited[neighborNode].second == currentColor) {
+            if(visited[neighbor] == -1){
+                if(!dfs(adjacencyList, visited, neighbor, currentColor)){
                     return false;
                 }
+            } else if (visited[neighbor] == currentColor){
+                return false;
             }
         }
 
@@ -29,10 +26,10 @@ public:
     }
 
     bool isBipartite(vector<vector<int>>& adjacencyList) {
-        vector<pair<int, int>> visited(adjacencyList.size(), {-1, -1});
+        vector<int> visited(adjacencyList.size(), -1);
         for(int node = 0; node < adjacencyList.size(); node++){
-            if(visited[node].first == -1){
-                if(!bfs(adjacencyList, visited, node)){
+            if(visited[node] == -1){
+                if(!dfs(adjacencyList, visited, node, 0)){
                     return false;
                 }
             }
