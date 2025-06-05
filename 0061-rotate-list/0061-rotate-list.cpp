@@ -10,38 +10,47 @@
  */
 class Solution {
 public:
-    int findLength(ListNode* head){
+    int getLength(ListNode* pointer){
         int length = 0;
-        ListNode* tempHead = head;
-        while(tempHead){
+        while(pointer){
             length++;
-            tempHead = tempHead->next;
+            pointer = pointer->next;
         }
+
         return length;
     }
 
-    ListNode* rotateRight(ListNode* head, int k){
-        int totalLength = findLength(head);
-        if(head == nullptr || head->next == nullptr || k % totalLength == 0){
+    ListNode* rotateRight(ListNode* head, int k) {
+        if(head == NULL){
+            return NULL;
+        } else if (!head->next){
             return head;
         }
 
-        int rotateIndex = k % totalLength;
+        int totalLength = getLength(head);
+        int amountRotated = k % totalLength;
 
-        int count = 0;
-        ListNode* tempHead = head;
-        ListNode* newHead = head;
-        while(count <= totalLength){
-            count++;
-            if(count == totalLength - rotateIndex){
-                newHead = tempHead->next;
-                tempHead->next = nullptr;
-                tempHead = newHead;
-            } else if(count == totalLength) {
-                tempHead->next = head;
-            } else {
-                tempHead = tempHead->next;
+        ListNode*newHead = NULL;
+
+        if(amountRotated == totalLength){
+            return head;
+        } else {
+            ListNode* pointer = head;
+            int targetLocation = totalLength - amountRotated - 1;
+
+            while(targetLocation--){
+                pointer = pointer->next;
             }
+
+            newHead = pointer->next;
+            pointer->next = NULL;
+
+            pointer = newHead;
+            while(pointer->next){
+                pointer = pointer->next;
+            }
+
+            pointer->next = head;
         }
 
         return newHead;
