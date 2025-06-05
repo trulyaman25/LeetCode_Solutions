@@ -4,20 +4,19 @@ public:
         visited[start].first = 1;
         visited[start].second = true;
 
-        queue<pair<pair<int, int>, int>> assetQueue;
-        assetQueue.push({{start, true}, -1});
+        queue<pair<int, int>> assetQueue;
+        assetQueue.push({start, true});
 
         while(!assetQueue.empty()){
-            int currentNode = assetQueue.front().first.first;
-            int currentColor = assetQueue.front().first.second;
-            int parentNode = assetQueue.front().second;
+            int currentNode = assetQueue.front().first;
+            int currentColor = assetQueue.front().second;
 
             assetQueue.pop();
             for(int i = 0; i < adjacencyList[currentNode].size(); i++){
                 int neighborNode = adjacencyList[currentNode][i];
                 
                 if(visited[neighborNode].first == -1){
-                    assetQueue.push({{neighborNode, !currentColor}, currentNode});
+                    assetQueue.push({neighborNode, !currentColor});
                     visited[neighborNode].first = 1;
                     visited[neighborNode].second = !currentColor;
                 } else if(visited[neighborNode].second == currentColor) {
