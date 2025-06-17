@@ -1,36 +1,20 @@
 class Solution {
 public:
-    bool traverse(vector<int>& nums, int index, vector<int>& dp){
-        if(index >= nums.size()){
-            return false;
-        }
+    bool canJump(vector<int>& nums) {
+        vector<bool> dp(nums.size(), false);
+        dp[0] = true;
 
-        if(index == nums.size() - 1){
-            return true;
-        }
+        for(int i = 0; i < dp.size(); i++){
+            if(!dp[i]){
+                continue;
+            }
 
-        if(dp[index] != -1){
-            return dp[index];
-        }
-
-        int maxJump = nums[index];
-        for(int i = 1; i <= maxJump; i++){
-            int nextIndex = index + i;
-            if(nextIndex < nums.size()){
-                if (traverse(nums, nextIndex, dp)) {
-                    dp[index] = 1;
-                    return true;
-                } else {
-                    dp[nextIndex] = 0;
-                }
+            int maxJump = nums[i];
+            for(int j = 1; j <= maxJump && i + j < nums.size(); j++){
+                dp[i + j] = true;
             }
         }
 
-        return false;
-    }
-
-    bool canJump(vector<int>& nums) {
-        vector<int> dp(nums.size(), -1);
-        return traverse(nums, 0, dp);
+        return dp.back();
     }
 };
