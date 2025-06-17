@@ -1,29 +1,22 @@
 class Solution {
 public:
-    int traverse(vector<int>& nums, int index, vector<int>& dp){
-        if(index >= nums.size()){
-            return 1e9;
-        }
-
-        if(index == nums.size() - 1){
-            return 0;
-        }
-
-        if(dp[index] != -1){
-            return dp[index];
-        }
-
-        int minJumps = INT_MAX - 1;
-        for(int i = 1; i <= nums[index] && index + i < nums.size(); i++){
-            int currentJumpCount = traverse(nums, index + i, dp) + 1;
-            minJumps = min(currentJumpCount, minJumps);
-        }
-
-        return dp[index] = minJumps;
-    }
-
     int jump(vector<int>& nums) {
-        vector<int> dp(nums.size(), -1);
-        return traverse(nums, 0, dp);
+        int jumpCount = 0;
+        int leftPointer = 0;
+        int rightPointer = 0;
+
+        while(rightPointer < nums.size() - 1){
+            int newRightIndex = 0;
+            for(int i = leftPointer; i <= rightPointer; i++){
+                int nextIndex = i + nums[i];
+                newRightIndex = max(nextIndex, newRightIndex);
+            }
+            leftPointer = rightPointer + 1;
+            rightPointer = newRightIndex;
+
+            jumpCount++;
+        }
+
+        return jumpCount;
     }
 };
