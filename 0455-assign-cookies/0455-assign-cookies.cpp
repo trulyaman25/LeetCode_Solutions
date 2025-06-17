@@ -1,19 +1,30 @@
 class Solution {
 public:
-    int findContentChildren(vector<int>& g, vector<int>& s) {
-        int gPointer = 0;
-        int sPointer = 0;
+    int findContentChildren(vector<int>& demand, vector<int>& size) {
+        int satisfiedChild = 0;
+        int unsatisfiedChild = demand.size();
 
-        sort(g.begin(), g.end());
-        sort(s.begin(), s.end());
+        int pointerOne = 0;
+        int pointerTwo = 0;
 
-        while (gPointer < g.size() && sPointer < s.size()) {
-            if (s[sPointer] >= g[gPointer]) {
-                gPointer++;
+        sort(demand.begin(), demand.end());
+        sort(size.begin(), size.end());
+
+        while(pointerOne < demand.size() && pointerTwo < size.size()){
+            int childDemand = demand[pointerOne];
+            int cookieSize = size[pointerTwo];
+
+            if(childDemand <= cookieSize){
+                satisfiedChild++;
+                unsatisfiedChild--;
+
+                pointerOne++;
+                pointerTwo++;
+            } else {
+                pointerTwo++;
             }
-            sPointer++;
         }
 
-        return gPointer;
+        return satisfiedChild;
     }
 };
