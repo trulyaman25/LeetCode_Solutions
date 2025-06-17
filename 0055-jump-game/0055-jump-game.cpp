@@ -17,8 +17,8 @@ public:
         for(int i = 1; i <= maxJump; i++){
             int nextIndex = index + i;
             if(nextIndex < nums.size()){
-                if(traverse(nums, nextIndex, dp)){
-                    dp[nextIndex] = 1;
+                if (traverse(nums, nextIndex, dp)) {
+                    dp[index] = 1;
                     return true;
                 } else {
                     dp[nextIndex] = 0;
