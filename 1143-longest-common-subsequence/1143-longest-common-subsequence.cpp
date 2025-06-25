@@ -1,30 +1,21 @@
 class Solution {
 public:
-    int getLCSS(string& stringOne, string& stringTwo, int indexOne, int indexTwo, vector<vector<int>>& dp){
-        if(indexOne >= stringOne.length()){
-            return 0;
-        }
-
-        if(indexTwo >= stringTwo.length()){
-            return 0;
-        }
-
-        if(dp[indexOne][indexTwo] != -1){
-            return dp[indexOne][indexTwo];
-        }
-
-        if(stringOne[indexOne] == stringTwo[indexTwo]){
-            return getLCSS(stringOne, stringTwo, indexOne + 1, indexTwo + 1, dp) + 1;
-        }
-
-        int caseOne = getLCSS(stringOne, stringTwo, indexOne + 1, indexTwo, dp);
-        int caseTwo = getLCSS(stringOne, stringTwo, indexOne, indexTwo + 1, dp);
-
-        return dp[indexOne][indexTwo] = max(caseOne, caseTwo);
-    }
-
     int longestCommonSubsequence(string text1, string text2) {
-        vector<vector<int>> dp(text1.length(), vector<int>(text2.length(), -1));
-        return getLCSS(text1, text2, 0, 0, dp);
+        vector<vector<int>> dp(text1.length() + 1, vector<int>(text2.length() + 1, 0));
+
+        for(int i = 0; i < text1.size(); i++){
+            for(int j = 0; j < text2.size(); j++){
+                if(text1[i] == text2[j]){
+                    dp[i + 1][j + 1] = 1 + dp[i][j]; 
+                } else {
+                    int caseOne = dp[i + 1][j];
+                    int caseTwo = dp[i][j + 1];
+
+                    dp[i + 1][j + 1] = max(caseOne, caseTwo);
+                }
+            }
+        }
+
+        return dp.back().back();
     }
-};
+}; 
