@@ -4,14 +4,7 @@ public:
         string reversedString = s;
         reverse(reversedString.begin(), reversedString.end());
 
-        vector<vector<int>> dp(s.length() + 1, vector<int>(s.length() + 1, -1));
-
-        for(int i = 0; i < s.length(); i++){
-            dp[i][0] = 0;
-        }
-        for(int j = 0; j < s.length(); j++){
-            dp[0][j] = 0;
-        }
+        vector<vector<int>> dp(s.length() + 1, vector<int>(s.length() + 1, 0));
 
         for(int i = 1; i <= s.length(); i++){
             for(int j = 1; j <= s.length(); j++){
