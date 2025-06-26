@@ -1,27 +1,25 @@
 class Solution {
 public:
-    int getDSS(string& stringOne, string& stringTwo, int indexOne, int indexTwo, vector<vector<int>>& dp){
-        if(indexTwo < 0){
-            return 1;
-        }
-
-        if(indexOne < 0){
-            return 0;
-        }
-
-        if(dp[indexOne][indexTwo] != -1){
-            return dp[indexOne][indexTwo];
-        }
-
-        if(stringOne[indexOne] == stringTwo[indexTwo]){
-            return dp[indexOne][indexTwo] = getDSS(stringOne, stringTwo, indexOne - 1, indexTwo - 1, dp) + getDSS(stringOne, stringTwo, indexOne - 1, indexTwo, dp);
-        }
-
-        return dp[indexOne][indexTwo] = getDSS(stringOne, stringTwo, indexOne - 1, indexTwo, dp);
-    }
-
     int numDistinct(string s, string t) {
-        vector<vector<int>> dp(s.length(), vector<int>(t.length(), -1));
-        return getDSS(s, t, s.length() - 1, t.length() - 1, dp);
+        vector<vector<double>> dp(s.length() + 1, vector<double>(t.length() + 1, -1));
+        for(int i = 0; i <= s.length(); i++){
+            dp[i][0] = 1;
+        }
+
+        for(int j = 1; j <= t.length(); j++){
+            dp[0][j] = 0;
+        }
+
+        for(int i = 1; i <= s.length(); i++){
+            for(int j = 1; j <= t.length(); j++){
+                if(s[i - 1] == t[j - 1]){
+                    dp[i][j] = dp[i - 1][j - 1] + dp[i - 1][j];
+                } else {
+                    dp[i][j] = dp[i - 1][j];
+                }
+            }
+        }
+
+        return (int)dp.back().back();
     }
 };
