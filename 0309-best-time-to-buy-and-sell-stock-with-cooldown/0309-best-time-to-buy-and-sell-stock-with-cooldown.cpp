@@ -1,29 +1,17 @@
 class Solution {
 public:
-    int getProfit(vector<int>& prices, int index, bool buy, vector<vector<int>>& dp){
-        if(index >= prices.size()){
-            return 0;
-        }
-
-        if(dp[index][buy] != -1){
-            return dp[index][buy];
-        }
-
-        if(buy){
-            int buyStock = -prices[index] + getProfit(prices, index + 1, false, dp);
-            int notBuyStock = getProfit(prices, index + 1, true, dp);
-
-            return dp[index][buy] = max(buyStock, notBuyStock);
-        } else {
-            int sellStock = prices[index] + getProfit(prices, index + 2, true, dp);
-            int notSellStock = getProfit(prices, index + 1, false, dp);
-
-            return dp[index][buy] = max(sellStock, notSellStock);
-        }
-    }
-
     int maxProfit(vector<int>& prices) {
-        vector<vector<int>> dp(prices.size() + 2, vector<int>(2, -1));
-        return getProfit(prices, 0, true, dp);
+        vector<vector<int>> dp(prices.size() + 2, vector<int>(2, 0));
+        for(int i = prices.size() - 1; i >= 0; i--){
+            for(int j = 0; j < 2; j++){
+                if(j == 1){
+                    dp[i][j] = max(-prices[i] + dp[i + 1][0], dp[i + 1][1]);
+                } else {
+                    dp[i][j] = max(prices[i] + dp[i + 2][1], dp[i + 1][0]);
+                }
+            }
+        }
+
+        return dp[0][1];
     }
 };
