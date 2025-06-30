@@ -1,11 +1,11 @@
 class Solution {
 public:
-    int maxProfit(int k, vector<int>& prices) {
-        vector<vector<vector<int>>> dp(prices.size() + 1, vector<vector<int>>(2, vector<int>(k + 1, 0)));
+    int maxProfit(int threshold, vector<int>& prices) {
+        vector<vector<vector<int>>> dp(prices.size() + 1, vector<vector<int>>(2, vector<int>(threshold + 1, 0)));
 
         for(int i = prices.size() - 1; i >= 0; i--){
             for(int j = 0; j < 2; j++){
-                for(int k = 1; k <= 2; k++){
+                for(int k = 1; k <= threshold; k++){
                     if(j){
                         dp[i][j][k] = max(-prices[i] + dp[i + 1][0][k], dp[i + 1][1][k]);
                     } else {
@@ -15,6 +15,6 @@ public:
             }
         }
 
-        return dp[0][1][2];
+        return dp[0][1].back();
     }
 };
