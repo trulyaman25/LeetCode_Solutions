@@ -1,6 +1,6 @@
 class MinStack {
 private:
-    vector<long long int> stack;
+    stack<pair<int, int>> assetStack;
 
 public:
     MinStack() {
@@ -8,26 +8,27 @@ public:
     }
     
     void push(int val) {
-        stack.push_back(val);
+        int minValue = INT_MAX;
+        
+        if(assetStack.empty()){
+            minValue = val;
+        } else {
+            minValue = min(assetStack.top().second, val);
+        }
+
+        assetStack.push({val, minValue});
     }
     
     void pop() {
-        stack.erase(stack.end() - 1);
+        assetStack.pop();
     }
     
     int top() {
-        return stack.back();
+        return assetStack.top().first;
     }
     
     int getMin() {
-        int min = INT_MAX;
-        for(int i = 0; i < stack.size(); i++){
-            if(stack[i] < min){
-                min = stack[i];
-            }
-        }
-
-        return min;
+        return assetStack.top().second;
     }
 };
 
