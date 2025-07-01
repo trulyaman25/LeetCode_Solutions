@@ -1,18 +1,24 @@
 class Solution {
 public:
     bool isValid(string s) {
-        stack<int> stack;
+        stack<char> assetStack;
+        
         for(int i = 0; i < s.length(); i++){
-            if(!stack.empty() && 
-               (stack.top() == '(' && s[i] == ')' ||
-                stack.top() == '{' && s[i] == '}' ||
-                stack.top() == '[' && s[i] == ']')){
-                stack.pop();
+            if(assetStack.empty()){
+                assetStack.push(s[i]);
             } else {
-                stack.push(s[i]);
+                if(
+                    assetStack.top() == '(' && s[i] == ')' || 
+                    assetStack.top() == '[' && s[i] == ']' ||
+                    assetStack.top() == '{' && s[i] == '}'
+                ){
+                    assetStack.pop();
+                } else {
+                    assetStack.push(s[i]);
+                }
             }
         }
 
-        return stack.empty();
+        return assetStack.empty();
     }
 };
