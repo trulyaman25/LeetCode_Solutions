@@ -1,29 +1,29 @@
 class Solution {
 public:
     int findMin(vector<int>& nums) {
-        int pointerOne = 0;
-        int pointerTwo = nums.size() - 1;
+        int leftPointer = 0;
+        int rightPointer = nums.size() - 1;
 
-        int mid = 0;
-        while(pointerOne <= pointerTwo){
-            mid = pointerOne + (pointerTwo - pointerOne) / 2;
-            int value = nums[mid];
+        int minValue = INT_MAX;
+        while(leftPointer <= rightPointer){
+            int mid = leftPointer + (rightPointer - leftPointer) / 2;
+            minValue = min(nums[mid], minValue);
 
-            if(value >= nums[pointerOne]){
-                if(nums[pointerTwo] <= nums[pointerOne]){
-                    pointerOne = mid + 1;
+            if(nums[leftPointer] <= nums[mid]){
+                if(nums[mid] > nums[rightPointer]){
+                    leftPointer = mid + 1;
                 } else {
-                    pointerTwo = mid - 1;
+                    rightPointer = mid - 1;
                 }
             } else {
-                if(nums[pointerTwo] > value){
-                    pointerTwo = mid;
+                if(nums[mid] <= nums[rightPointer]){
+                    rightPointer = mid - 1;
                 } else {
-                    pointerOne = mid + 1;
+                    leftPointer = mid + 1;
                 }
             }
         }
 
-        return nums[mid];
+        return minValue;
     }
 };
