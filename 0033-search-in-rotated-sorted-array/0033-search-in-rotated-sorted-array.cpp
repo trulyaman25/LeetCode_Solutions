@@ -1,26 +1,26 @@
 class Solution {
 public:
     int search(vector<int>& nums, int target) {
-        int leftPointer = 0;
-        int rightPointer = nums.size() - 1;
+        int pointerOne = 0;
+        int pointerTwo = nums.size() - 1;
 
-        while (leftPointer <= rightPointer) {
-            int mid = leftPointer + (rightPointer - leftPointer) / 2;
-            if (nums[mid] == target) {
+        while (pointerOne <= pointerTwo) {
+            int mid = pointerOne + (pointerTwo - pointerOne) / 2;
+            int midValue = nums[mid];
+
+            if (midValue == target) {
                 return mid;
-            }
-
-            if(nums[leftPointer] <= nums[mid]){
-                if (nums[leftPointer] <= target && target < nums[mid]) {
-                    rightPointer = mid - 1;
+            } else if(midValue >= nums[pointerOne]){
+                if (nums[pointerOne] <= target && target < midValue) {
+                    pointerTwo = mid - 1;
                 } else {
-                    leftPointer = mid + 1;
+                    pointerOne = mid + 1;
                 }
             } else {
-                if (nums[rightPointer] >= target && nums[mid] < target) {
-                    leftPointer = mid + 1;
+                if (nums[pointerTwo] >= target && midValue < target) {
+                    pointerOne = mid + 1;
                 } else {
-                    rightPointer = mid - 1;
+                    pointerTwo = mid - 1;
                 }
             }
         }
