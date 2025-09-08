@@ -10,10 +10,13 @@ public:
             int currentNode = nodeQueue.front();
             nodeQueue.pop();
 
-            for(int i = 0; i < isConnected[currentNode].size(); i++){
-                if(isConnected[currentNode][i] == 1 && !visited[i]){
-                    visited[i] = true;
-                    nodeQueue.push(i);
+            for(int neighborNode = 0; neighborNode < isConnected[currentNode].size(); neighborNode++){
+                if(
+                    isConnected[currentNode][neighborNode] == 1 && 
+                    !visited[neighborNode]
+                ){
+                    visited[neighborNode] = true;
+                    nodeQueue.push(neighborNode);
                 }
             }
         }
