@@ -11,11 +11,9 @@ public:
             nodeQueue.pop();
 
             for(int i = 0; i < isConnected[currentNode].size(); i++){
-                int neighborNode = isConnected[startNode][i];
-
-                if(isConnected[currentNode][i] == 1 && !visited[neighborNode]){
+                if(isConnected[currentNode][i] == 1 && !visited[i]){
                     visited[i] = true;
-                    nodeQueue.push(neighborNode);
+                    nodeQueue.push(i);
                 }
             }
         }
