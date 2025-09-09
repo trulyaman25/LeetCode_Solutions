@@ -1,31 +1,38 @@
 class Solution {
-public:
-    int minAnagramLength(string input_str) {
-        int n = input_str.size();
-        vector<int> freq(26, 0);
-
-        // Count frequency of each character
-        for (char c : input_str) {
-            freq[c - 'a']++;
+private:
+    bool check(string inputString, int k) {
+        map<char,int>hashMapOne;
+        for(int i = 0; i < k; i++){
+            hashMapOne[inputString[i]]++;
         }
 
-        // Try each divisor of n
-        for (int k = 1; k <= n; k++) {
-            if (n % k != 0) continue;  // k must divide n
-            bool ok = true;
-
-            // For each character frequency, it must be divisible by (n/k)
-            int parts = n / k;
-            for (int f : freq) {
-                if (f % parts != 0) {
-                    ok = false;
-                    break;
-                }
+        for(int i = k; i < inputString.size(); i += k){
+            if(i + k > inputString.size()){
+                return 0;
             }
 
-            if (ok) return k;  // smallest valid k
+            map<char,int> hashMapTwo;
+            for(int j = i; j < i + k; j++){
+                hashMapTwo[inputString[j]]++;
+            }
+
+            if(hashMapOne != hashMapTwo){
+                return 0; 
+            }
         }
 
-        return n; // fallback (worst case)
+        return 1;
+    }
+    
+public:
+
+    int minAnagramLength(string inputString) {
+        for(int i = 1; i <= inputString.length(); i++){
+            if(inputString.length() % i == 0 && check(inputString, i)){
+                return i;
+            }
+        }
+
+        return inputString.length();
     }
 };
