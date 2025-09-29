@@ -1,23 +1,28 @@
 class Solution {
 public:
     int lengthOfLongestSubstring(string s) {
-        unordered_map<char, int> charFrequency;
+        if(s.length() == 0 || s.length() == 1){
+            return s.length();
+        }
 
-        int pointerOne = 0;
-        int pointerTwo = 0;
+        unordered_map<char, int> frequency;
 
-        int maxLength = 0;
-        while(pointerTwo < s.length()){
-            charFrequency[s[pointerTwo]]++;
-            while(charFrequency[s[pointerTwo]] > 1){
-                charFrequency[s[pointerOne]]--;
-                if(charFrequency[s[pointerOne]] == 0){
-                    charFrequency.erase(s[pointerOne]);
+        int maxLength = INT_MIN;
+        int leftPointer = 0;
+        int rightPointer = 0;
+        while(rightPointer <= s.length()){
+            int currentLength = rightPointer - leftPointer;
+            maxLength = max(currentLength, maxLength);
+
+            if(frequency[s[rightPointer]] == 0){
+                frequency[s[rightPointer]]++;
+                rightPointer++;
+            } else {
+                while(leftPointer <= rightPointer && frequency[s[rightPointer]] != 0){
+                    frequency[s[leftPointer]]--;
+                    leftPointer++;
                 }
-                pointerOne++;
             }
-            maxLength = max(maxLength, pointerTwo - pointerOne + 1);
-            pointerTwo++;
         }
 
         return maxLength;
