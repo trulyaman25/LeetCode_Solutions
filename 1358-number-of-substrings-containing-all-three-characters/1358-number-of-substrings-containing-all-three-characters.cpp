@@ -1,24 +1,24 @@
 class Solution {
 public:
     int numberOfSubstrings(string s) {
-        int pointerOne = 0;
-        int pointerTwo = 0;
-
-        int substringCount = 0;
+        int count = 0;
         unordered_map<char, int> hashMap;
-        while(pointerTwo < s.length()){
-            hashMap[s[pointerTwo]]++;
+
+        int leftPointer = 0;
+        int rightPointer = 0;
+        while(rightPointer < s.length()){
+            hashMap[s[rightPointer]]++;
             while(hashMap.size() == 3){
-                hashMap[s[pointerOne]]--;
-                if(hashMap[s[pointerOne]] <= 0){
-                    hashMap.erase(s[pointerOne]);
+                count += s.length() - rightPointer;
+                hashMap[s[leftPointer]]--;
+                if(hashMap[s[leftPointer]] == 0){
+                    hashMap.erase(s[leftPointer]);
                 }
-                substringCount += s.length() - pointerTwo;
-                pointerOne++;
+                leftPointer++;
             }
-            pointerTwo++;
+            rightPointer++;
         }
 
-        return substringCount;
+        return count;
     }
 };
